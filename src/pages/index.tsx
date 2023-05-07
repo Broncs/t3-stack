@@ -6,10 +6,14 @@ import { SignInButton, useUser, UserButton ,SignIn} from "@clerk/nextjs";
 import { api } from "~/utils/api";
  
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
+  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   const user = useUser();
+  const { data } = api.posts.getAll.useQuery()
+
+
+
+  console.log(data)
   return (
     <>
       <Head>
@@ -23,6 +27,10 @@ const Home: NextPage = () => {
          <SignIn />
 
          <UserButton />
+
+         <div className=" text-white">
+          {data?.map(post => (<div key={post.id}>{post.content}</div>))}
+         </div> 
           
         </div>  
       </main>
